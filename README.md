@@ -21,8 +21,6 @@ $ git clone https://github.com/japaric/photon-quickstart
 
 $ mv photon-quickstart my-app && cd $_
 
-$ git checkout v0.1.0
-
 $ edit Cargo.toml && head $_
 authors = ["Jorge Aparicio <jorge@japaric.io>"]
 name = "my-app"
