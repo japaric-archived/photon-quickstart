@@ -9,8 +9,11 @@ Firmware version: v0.6.2
 # Dependencies
 
 - Embedded ARM toolchain. Any recent version should do.
-- Rust toolchain. See https://rustup.rs
-- Xargo. `$ cargo install xargo`
+- Rust nightly toolchain. See https://rustup.rs
+- Xargo. `$ rustup run nightly cargo install xargo`
+- The rust-src component for nightly: `$ rustup default nightly && rustup
+  component add rust-src` If you don't want to keep nightly as the default, you
+  can revert the change after installing the `rust-src` component.
 - `crc32` and `xxd`. Check how your distribution ships these binaries.
 
 # How to use
