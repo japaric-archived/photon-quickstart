@@ -1,0 +1,20 @@
+[build]
+target = "photon"
+
+[target.photon]
+rustflags = [
+  "-C", "link-arg=-lhal-dynalib",
+  "-C", "link-arg=-lservices-dynalib",
+  "-C", "link-arg=-lsystem-dynalib",
+  "-C", "link-arg=-lrt-dynalib",
+  "-C", "link-arg=-lwiring",
+  "-C", "link-arg=-lcommunication-dynalib",
+  "-C", "link-arg=-lplatform",
+  "-C", "link-arg=-lwiring_globals",
+  "-C", "link-arg=-Wl,--no-whole-archive",
+  "-C", "link-arg=-lnosys",
+  "-C", "link-arg=-Tlinker.ld",
+  "-C", "link-arg=--specs=nano.specs",
+  "-C", "link-arg=-Wl,--defsym,USER_FIRMWARE_IMAGE_SIZE=0x20000",
+  "-C", "link-arg=-Wl,--defsym,USER_FIRMWARE_IMAGE_LOCATION=0x80A0000",
+]
