@@ -17,9 +17,9 @@ Firmware version: v0.6.2
 
 ```
 # Instantiate this template
-$ git clone https://github.com/japaric/particle-quickstart
+$ git clone https://github.com/japaric/photon-quickstart
 
-$ mv particle-quickstart my-app && cd $_
+$ mv photon-quickstart my-app && cd $_
 
 $ git checkout v0.1.0
 
