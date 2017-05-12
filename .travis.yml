@@ -1,0 +1,35 @@
+language: rust
+
+matrix:
+  include:
+    - env: TARGET=thumbv7em-none-eabi
+      addons:
+        apt:
+          packages:
+            - gcc-arm-none-eabi
+      rust: nightly
+    - env: TARGET=thumbv7em-none-eabi
+      os: osx
+      rust: nightly
+
+before_install: set -e
+
+install:
+  - sh ci/install.sh
+
+script:
+  - sh ci/script.sh
+
+after_script: set +e
+
+cache: cargo
+
+branches:
+  only:
+    - auto
+    - master
+    - try
+
+notifications:
+  email:
+    on_success: never
