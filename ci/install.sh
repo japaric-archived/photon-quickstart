@@ -5,7 +5,7 @@ main() {
     rustup component add rust-src || true
 
     if [ $TRAVIS_OS_NAME = linux ]; then
-        sudo add-apt-repository ppa:team-gcc-arm-embedded/ppa
+        sudo add-apt-repository -y ppa:team-gcc-arm-embedded/ppa
         sudo apt-get update
         sudo apt-get install --no-install-recommends -y gcc-arm-embedded
     else
