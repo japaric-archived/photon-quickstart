@@ -25,15 +25,9 @@ fn setup() {
 
 fn loop_() {
     unsafe {
-        usb::USB_USART_Send_Data(b'R');
-        delay::HAL_Delay_Milliseconds(PERIOD);
-        usb::USB_USART_Send_Data(b'u');
-        delay::HAL_Delay_Milliseconds(PERIOD);
-        usb::USB_USART_Send_Data(b's');
-        delay::HAL_Delay_Milliseconds(PERIOD);
-        usb::USB_USART_Send_Data(b't');
-        delay::HAL_Delay_Milliseconds(PERIOD);
-        usb::USB_USART_Send_Data(b' ');
-        delay::HAL_Delay_Milliseconds(PERIOD);
+        for byte in b"Rust " {
+            usb::USB_USART_Send_Data(*byte);
+            delay::HAL_Delay_Milliseconds(PERIOD);
+        }
     }
 }
