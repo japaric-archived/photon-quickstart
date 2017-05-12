@@ -1,7 +1,7 @@
 set -ex
 
 main() {
-    cargo install xargo || true
+    ( cd /tmp && cargo install xargo || true )
     rustup component add rust-src || true
 
     if [ $TRAVIS_OS_NAME = linux ]; then
