@@ -1,12 +1,9 @@
 language: rust
+sudo: required
 
 matrix:
   include:
     - env: TARGET=thumbv7em-none-eabi
-      addons:
-        apt:
-          packages:
-            - gcc-arm-none-eabi
       rust: nightly
     - env: TARGET=thumbv7em-none-eabi
       os: osx
