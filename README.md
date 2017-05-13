@@ -43,6 +43,98 @@ $ sh elf2bin.sh target/photon/release/examples/blinky
 $ particle flash $device blinky.bin
 ```
 
+# Troubleshooting
+
+This section contains fixes for common errors encountered when using this
+template.
+
+### Forgot to install the `rust-src` component
+
+Old error message (Xargo <=v0.3.6):
+
+```
+$ xargo build
+error: couldn't walk the sysroot
+caused by: IO error for operation on /home/japaric/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src: No such file or directory (os error 2)
+caused by: No such file or directory (os error 2)
+note: run with `RUST_BACKTRACE=1` for a backtrace
+```
+
+New error message:
+
+```
+$ xargo build
+error: `rust-src` component not found. Run `rustup component add rust-src`.
+note: run with `RUST_BACKTRACE=1` for a backtrace
+```
+
+Solution: Install the `rust-src` component using the command `rustup component
+add rust-src`.
+
+## Forgot to install the `arm-none-eabi-g++` linker
+
+Error message:
+
+```
+$ xargo build
+   Compiling demo v0.1.0 (file:///home/japaric/tmp/demo)
+error: could not exec the linker `arm-none-eabi-g++`: No such file or directory (os error 2)
+  |
+  = note: "arm-none-eabi-g++" (..)
+```
+
+Solution: Install the embedded ARM toolchain. Consult your distribution / OS
+package manager.
+
+## Used Cargo instead of Xargo
+
+Error message:
+
+```
+$ cargo build
+   Compiling particle-hal v0.1.0 (https://github.com/japaric/particle-hal#179f8fb8)
+error[E0463]: can't find crate for `core`
+  |
+  = note: the `photon` target may not be installed
+
+error: aborting due to previous error
+```
+
+Solution: use Xargo instead of Cargo. That is `xargo build`.
+
+### Forgot to call the `elf2bin.sh` script
+
+Error message:
+
+```
+$ particle flash $device target/..
+Including:
+    target/photon/release/examples/(..)
+attempting to flash firmware to your device (..)
+Flash device failed.
+[object Object]
+```
+
+Solution: Call `elf2bin.sh` on the Cargo output and then (`particle`) flash the
+output of that script, a `.bin` file.
+
+## Used the stable toolchain
+
+Error message:
+
+```
+$ xargo build
+   Compiling particle-hal v0.1.0 (https://github.com/japaric/particle-hal#179f8fb8)
+error[E0463]: can't find crate for `core`
+  |
+  = note: the `photon` target may not be installed
+
+error: aborting due to previous error
+```
+
+Solution: Switch to the nightly toolchain using the command `rustup default
+nightly`.
+
 # License
 
 The Rust code in repository is licensed under either of
