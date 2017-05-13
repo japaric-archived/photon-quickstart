@@ -7,5 +7,8 @@ version = "0.1.0"
 particle-hal = { git = "https://github.com/japaric/particle-hal" }
 photon = { git = "https://github.com/japaric/photon" }
 
+[dev-dependencies]
+numtoa = "0.0.7"
+
 [profile.release]
 lto = true
