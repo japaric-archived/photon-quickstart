@@ -1,8 +1,31 @@
 [build]
-target = "photon"
+target = "thumbv7m-none-eabi"
 
-[target.photon]
+[target.thumbv7m-none-eabi]
 rustflags = [
+  "-C", "linker=arm-none-eabi-g++",
+
+  "-Z", "pre-link-arg=-g3",
+  "-Z", "pre-link-arg=-gdwarf-2",
+  "-Z", "pre-link-arg=-Os",
+  "-Z", "pre-link-arg=-mcpu=cortex-m3",
+  "-Z", "pre-link-arg=-mthumb",
+  "-Z", "pre-link-arg=-ffunction-sections",
+  "-Z", "pre-link-arg=-fdata-sections",
+  "-Z", "pre-link-arg=-fno-builtin-malloc",
+  "-Z", "pre-link-arg=-fno-builtin-free",
+  "-Z", "pre-link-arg=-fno-builtin-realloc",
+  "-Z", "pre-link-arg=build/target/user-part/platform-6-m/src/user_module.o",
+  "-Z", "pre-link-arg=build/target/user-part/platform-6-m/src/module_info.o",
+  "-Z", "pre-link-arg=build/target/user-part/platform-6-m/src/user_export.o",
+  "-Z", "pre-link-arg=build/target/user-part/platform-6-m/src/newlib_stubs.o",
+  "-Z", "pre-link-arg=-Wl,--whole-archive",
+  "-Z", "pre-link-arg=hal/src/photon/lib/STM32F2xx_Peripheral_Libraries.a",
+  "-Z", "pre-link-arg=-Wl,--no-whole-archive",
+  "-Z", "pre-link-arg=-nostartfiles",
+  "-Z", "pre-link-arg=-Xlinker",
+  "-Z", "pre-link-arg=--gc-sections",
+
   "-C", "link-arg=-Wl,--whole-archive",
   "-C", "link-arg=-lhal-dynalib",
   "-C", "link-arg=-lservices-dynalib",
@@ -13,6 +36,7 @@ rustflags = [
   "-C", "link-arg=-lplatform",
   "-C", "link-arg=-lwiring_globals",
   "-C", "link-arg=-Wl,--no-whole-archive",
+  "-C", "link-arg=-lc",
   "-C", "link-arg=-lnosys",
   "-C", "link-arg=-Tlinker.ld",
   "-C", "link-arg=--specs=nano.specs",
