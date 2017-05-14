@@ -6,28 +6,25 @@ extern crate particle_hal as hal;
 #[macro_use]
 extern crate photon;
 
+const PERIOD: u32 = 100; // ms
+const BAUD_RATE: u32 = 115_200;
+
 app! {
     setup: setup,
     loop: loop_,
 }
 
-use hal::delay;
-use hal::usb;
-
-const PERIOD: u32 = 100; // ms
-const BAUD_RATE: u32 = 115_200;
-
 fn setup() {
     unsafe {
-        usb::USB_USART_Init(BAUD_RATE);
+        hal::USB_USART_Init(BAUD_RATE);
     }
 }
 
 fn loop_() {
     unsafe {
         for byte in b"Rust " {
-            usb::USB_USART_Send_Data(*byte);
-            delay::HAL_Delay_Milliseconds(PERIOD);
+            hal::USB_USART_Send_Data(*byte);
+            hal::HAL_Delay_Milliseconds(PERIOD);
         }
     }
 }
