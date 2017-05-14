@@ -6,9 +6,8 @@ extern crate particle_hal as hal;
 #[macro_use]
 extern crate photon;
 
-use hal::{PinMode, pin_t};
+use hal::{LED, PinMode};
 
-const D7: pin_t = 7;
 const PERIOD: u32 = 250; // ms
 
 app! {
@@ -17,16 +16,12 @@ app! {
 }
 
 fn setup() {
-    unsafe {
-        hal::HAL_Pin_Mode(D7, PinMode::OUTPUT);
-    }
+    LED.pin_mode(PinMode::Output);
 }
 
 fn loop_() {
-    unsafe {
-        hal::HAL_GPIO_Write(D7, 0);
-        hal::HAL_Delay_Milliseconds(PERIOD);
-        hal::HAL_GPIO_Write(D7, 1);
-        hal::HAL_Delay_Milliseconds(PERIOD);
-    }
+    LED.low();
+    hal::sleep_ms(PERIOD);
+    LED.high();
+    hal::sleep_ms(PERIOD);
 }

@@ -6,6 +6,8 @@ extern crate particle_hal as hal;
 #[macro_use]
 extern crate photon;
 
+use hal::UsbSerial;
+
 const PERIOD: u32 = 100; // ms
 const BAUD_RATE: u32 = 115_200;
 
@@ -15,16 +17,12 @@ app! {
 }
 
 fn setup() {
-    unsafe {
-        hal::USB_USART_Init(BAUD_RATE);
-    }
+    UsbSerial.begin(BAUD_RATE);
 }
 
 fn loop_() {
-    unsafe {
-        for byte in b"Rust " {
-            hal::USB_USART_Send_Data(*byte);
-            hal::HAL_Delay_Milliseconds(PERIOD);
-        }
+    for byte in b"Rust " {
+        UsbSerial.write(*byte);
+        hal::sleep_ms(PERIOD);
     }
 }
