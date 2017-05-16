@@ -14,7 +14,8 @@ Firmware version: v0.6.2
 - The rust-src component for nightly: `$ rustup default nightly && rustup
   component add rust-src` If you don't want to keep nightly as the default, you
   can revert the change after installing the `rust-src` component.
-- `crc32` and `xxd`. Check how your distribution ships these binaries.
+- `particle-tools`. For the `elf2bin` tool. Install with
+  `$ cargo install --git https://github.com/japaric/particle-tools`
 
 # How to use
 
@@ -37,7 +38,7 @@ $ arm-none-eabi-size target/photon/release/examples/blinky
    4468       8    1476    5952    1740 target/photon/release/examples/blinky
 
 # convert the output into a flash-able binary
-$ sh elf2bin.sh target/photon/release/examples/blinky
+$ elf2bin target/photon/release/examples/blinky
 
 # flash the application
 $ particle flash $device blinky.bin
@@ -102,7 +103,7 @@ error: aborting due to previous error
 
 Solution: use Xargo instead of Cargo. That is `xargo build`.
 
-### Forgot to call the `elf2bin.sh` script
+### Forgot to call the `elf2bin` tool
 
 Error message:
 
@@ -115,8 +116,8 @@ Flash device failed.
 [object Object]
 ```
 
-Solution: Call `elf2bin.sh` on the Cargo output and then (`particle`) flash the
-output of that script, a `.bin` file.
+Solution: Call `elf2bin` on the Cargo output and then (`particle`) flash the
+output of that script: a `.bin` file.
 
 ## Used the stable toolchain
 
