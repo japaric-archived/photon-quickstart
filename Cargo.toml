@@ -10,5 +10,11 @@ photon = { git = "https://github.com/japaric/photon" }
 [dev-dependencies]
 numtoa = "0.0.7"
 
+[profile.dev]
+debug = false
+debug-assertions = false
+lto = true
+opt-level = 3
+
 [profile.release]
 lto = true
