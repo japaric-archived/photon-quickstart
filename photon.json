@@ -39,8 +39,7 @@
             "-Wl,--no-whole-archive",
             "-nostartfiles",
             "-Xlinker",
-            "--gc-sections",
-            "-Wl,--whole-archive"
+            "--gc-sections"
         ]
     },
     "relocation-model": "static",

@@ -3,6 +3,7 @@ target = "photon"
 
 [target.photon]
 rustflags = [
+  "-C", "link-arg=-Wl,--whole-archive",
   "-C", "link-arg=-lhal-dynalib",
   "-C", "link-arg=-lservices-dynalib",
   "-C", "link-arg=-lsystem-dynalib",
