@@ -2,11 +2,12 @@
 
 #![no_std]
 
-extern crate particle_hal as hal;
 #[macro_use]
 extern crate photon;
+extern crate photon_hal as hal;
 
 use hal::UsbSerial;
+use photon::App;
 
 const PERIOD: u32 = 1_000; // ms
 const BAUD_RATE: u32 = 115_200;
@@ -16,11 +17,11 @@ app! {
     loop: loop_,
 }
 
-fn setup() {
+fn setup(_: App) {
     UsbSerial.begin(BAUD_RATE);
 }
 
-fn loop_() {
+fn loop_(ref mut app: App) {
     // Get Device ID
     let device_id = hal::device_id();
 
@@ -36,5 +37,5 @@ fn loop_() {
     UsbSerial.write(b'\n');
     UsbSerial.write(b'\r');
 
-    hal::sleep_ms(PERIOD);
+    app.delay_ms(PERIOD);
 }

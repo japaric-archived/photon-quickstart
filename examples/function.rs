@@ -10,10 +10,11 @@
 
 #![no_std]
 
-extern crate particle_hal as hal;
 #[macro_use]
 extern crate photon;
+extern crate photon_hal as hal;
 
+use photon::{App, Cloud};
 use hal::{D7, PinMode, String, cloud};
 
 app! {
@@ -21,19 +22,19 @@ app! {
     loop: loop_,
 }
 
-fn setup() {
+fn setup(_: App) {
     D7.pin_mode(PinMode::Output);
 
-    if cloud::function("led", toggle).is_ok() {
+    if cloud::function("led", led).is_ok() {
         D7.high();
     } else {
         D7.low();
     }
 }
 
-fn loop_() {}
+fn loop_(_: App) {}
 
-extern "C" fn toggle(command: &String) -> i32 {
+extern "C" fn led(command: &String, _: Cloud) -> i32 {
     if &**command == b"on" {
         D7.high();
         1

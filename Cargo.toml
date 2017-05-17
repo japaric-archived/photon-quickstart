@@ -4,7 +4,7 @@ name = "photon-quickstart"
 version = "0.1.0"
 
 [dependencies]
-particle-hal = { git = "https://github.com/japaric/particle-hal" }
+photon-hal = { git = "https://github.com/japaric/photon-hal" }
 photon = { git = "https://github.com/japaric/photon" }
 
 [profile.dev]
