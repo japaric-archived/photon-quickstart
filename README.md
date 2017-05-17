@@ -9,39 +9,61 @@ Firmware version: v0.6.2
 # Dependencies
 
 - Embedded ARM toolchain. Any recent version should do.
-- Rust nightly toolchain. See https://rustup.rs
-- Xargo. `$ rustup run nightly cargo install xargo`
-- The rust-src component for nightly: `$ rustup default nightly && rustup
-  component add rust-src` If you don't want to keep nightly as the default, you
-  can revert the change after installing the `rust-src` component.
-- `particle-tools`. For the `elf2bin` tool. Install with
-  `$ cargo install --git https://github.com/japaric/particle-tools`
+  - On Windows, check
+    the [GNU ARM Embedded Toolchain](https://launchpad.net/gcc-arm-embedded).
+    The download links are on the left side.
+  - On macOS, run `brew cask install gcc-arm-embedded`.
+  - On Ubuntu, install the `gcc-arm-none-eabi`, `libnewlib-arm-none-eabi` and
+    `libstdc++-arm-none-eabi-newlib` packages.
+- Rust nightly toolchain. See https://rustup.rs for installation instructions,
+  or run `rustup default nightly` (or create an override) if you already have
+  rustup installed.
+- Xargo. `$ cargo install xargo`
+- The rust-src component for the nightly channel. `$ rustup component add
+  rust-src`.
+- `particle-cli`. `$ npm -g install particle-cli`.
+- `particle-tools`, for the `elf2bin` tool. `$ cargo install --git
+  https://github.com/japaric/particle-tools`
 
 # How to use
 
 ```
-# Instantiate this template
-$ git clone https://github.com/japaric/photon-quickstart
+# Grab a copy of this template
+$ git clone https://github.com/japaric/photon-quickstart my-app && cd $_
 
-$ mv photon-quickstart my-app && cd $_
-
+# rename the project
 $ edit Cargo.toml && head $_
 authors = ["Jorge Aparicio <jorge@japaric.io>"]
 name = "my-app"
 version = "0.1.0"
 
 # build an example (or write your application in src/main.rs and build that)
-$ xargo build --example blinky --release
+$ xargo build --example function
+(..)
+   Compiling my-app v0.1.0 (file:///home/japaric/tmp/my-app)
+    Finished dev [optimized] target(s) in 0.32 secs
 
-$ arm-none-eabi-size target/photon/release/examples/blinky
+$ arm-none-eabi-size target/photon/debug/examples/function
    text    data     bss     dec     hex filename
-   4468       8    1476    5952    1740 target/photon/release/examples/blinky
+   4628       8    1476    6112    17e0 target/photon/debug/examples/function
 
 # convert the output into a flash-able binary
-$ elf2bin target/photon/release/examples/blinky
+$ elf2bin target/photon/debug/examples/function
 
-# flash the application
-$ particle flash $device blinky.bin
+# flash the application, the D7 LED on the board should turn on
+$ particle flash $device function.bin
+Including:
+    function.bin
+attempting to flash firmware to your device Ferris
+Flash device OK:  Update started
+
+# turn off the LED
+$ particle call $device led off
+0
+
+# turn it on again
+$ particle call $device led on
+1
 ```
 
 # Troubleshooting
@@ -78,7 +100,7 @@ Error message:
 
 ```
 $ xargo build
-   Compiling demo v0.1.0 (file:///home/japaric/tmp/demo)
+   Compiling my-app v0.1.0 (file:///home/japaric/tmp/my-app)
 error: could not exec the linker `arm-none-eabi-g++`: No such file or directory (os error 2)
   |
   = note: "arm-none-eabi-g++" (..)
@@ -86,6 +108,38 @@ error: could not exec the linker `arm-none-eabi-g++`: No such file or directory 
 
 Solution: Install the embedded ARM toolchain. Consult your distribution / OS
 package manager.
+
+## Didn't install the `libnewlib-arm-none-eabi` package
+
+Error message:
+
+```
+$ xargo build
+   Compiling my-app v0.1.0 (file:///home/japaric/tmp/my-app)
+error: linking with `arm-none-eabi-g++` failed: exit code: 1
+  |
+  = note: "arm-none-eabi-g++" (..)
+  = note: arm-none-eabi-g++: error: nano.specs: No such file or directory
+```
+
+Solution: Install the `libnewlib-arm-none-eabi` package. This is on Ubuntu;
+other distributions may call the package with a different name.
+
+## Didn't install the `libstdc++-arm-none-eabi-newlib` package
+
+Error message:
+
+```
+$ xargo build
+   Compiling my-app v0.1.0 (file:///home/japaric/tmp/my-app)
+error: linking with `arm-none-eabi-g++` failed: exit code: 1
+  |
+  = note: "arm-none-eabi-g++" (..)
+  = note: /usr/lib/gcc/arm-none-eabi/4.9.3/../../../arm-none-eabi/bin/ld: cannot find -lstdc++_nano
+```
+
+Solution: Install the `libstdc++-arm-none-eabi-newlib` package. This is on
+Ubuntu; other distributions may call the package with a different name.
 
 ## Used Cargo instead of Xargo
 
