@@ -27,41 +27,41 @@ Firmware version: v0.6.2
 
 # How to use
 
-```
-# Grab a copy of this template
+``` console
+$ # Grab a copy of this template
 $ git clone https://github.com/japaric/photon-quickstart my-app && cd $_
 
-# rename the project
+$ # rename the project
 $ edit Cargo.toml && head $_
 authors = ["Jorge Aparicio <jorge@japaric.io>"]
 name = "my-app"
 version = "0.1.0"
 
-# build an example (or write your application in src/main.rs and build that)
+$ # build an example (or write your application in src/main.rs and build that)
 $ xargo build --example function
 (..)
    Compiling my-app v0.1.0 (file:///home/japaric/tmp/my-app)
     Finished dev [optimized] target(s) in 0.32 secs
 
-$ arm-none-eabi-size target/photon/debug/examples/function
+$ arm-none-eabi-size target/thumbv7m-none-eabi/debug/examples/function
    text    data     bss     dec     hex filename
-   4628       8    1476    6112    17e0 target/photon/debug/examples/function
+   4628       8    1476    6112    17e0 target/thumbv7m-none-eabi/debug/examples/function
 
-# convert the output into a flash-able binary
-$ elf2bin target/photon/debug/examples/function
+$ # convert the output into a flash-able binary
+$ elf2bin target/thumbv7m-none-eabi/debug/examples/function
 
-# flash the application, the D7 LED on the board should turn on
+$ # flash the application, the D7 LED on the board should turn on
 $ particle flash $device function.bin
 Including:
     function.bin
 attempting to flash firmware to your device Ferris
 Flash device OK:  Update started
 
-# turn off the LED
+$ # turn off the LED
 $ particle call $device led off
 0
 
-# turn it on again
+$ # turn it on again
 $ particle call $device led on
 1
 ```
@@ -150,7 +150,7 @@ $ cargo build
    Compiling particle-hal v0.1.0 (https://github.com/japaric/particle-hal#179f8fb8)
 error[E0463]: can't find crate for `core`
   |
-  = note: the `photon` target may not be installed
+  = note: the `thumbv7m-none-eabi` target may not be installed
 
 error: aborting due to previous error
 ```
@@ -164,7 +164,7 @@ Error message:
 ```
 $ particle flash $device target/..
 Including:
-    target/photon/release/examples/(..)
+    target/thumbv7m-none-eabi/release/examples/(..)
 attempting to flash firmware to your device (..)
 Flash device failed.
 [object Object]
@@ -182,7 +182,7 @@ $ xargo build
    Compiling particle-hal v0.1.0 (https://github.com/japaric/particle-hal#179f8fb8)
 error[E0463]: can't find crate for `core`
   |
-  = note: the `photon` target may not be installed
+  = note: the `thumbv7m-none-eabi` target may not be installed
 
 error: aborting due to previous error
 ```
