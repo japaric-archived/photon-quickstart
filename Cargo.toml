@@ -5,11 +5,13 @@ version = "0.1.0"
 
 [dependencies]
 photon-hal = { git = "https://github.com/japaric/photon-hal" }
-photon = { git = "https://github.com/japaric/photon" }
+photon = { path = "../photon" }
+# photon = { git = "https://github.com/japaric/photon" }
 
 [profile.dev]
 debug = false
 debug-assertions = false
+incremental = false
 lto = true
 opt-level = 3
 
