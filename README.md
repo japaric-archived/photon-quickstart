@@ -18,10 +18,8 @@ Firmware version: v0.6.2
 - Rust nightly toolchain. See https://rustup.rs for installation instructions,
   or run `rustup default nightly` (or create an override) if you already have
   rustup installed.
-- Xargo. `$ cargo install xargo`
-- The rust-src component for the nightly channel. `$ rustup component add
-  rust-src`.
-- `particle-cli`. `$ npm -g install particle-cli`.
+- The thumbv7m-none-eabi target, `rustup target add thumbv7m-none-eabi`
+- `particle-cli`. See https://docs.particle.io/guide/getting-started/connect/photon/
 - `particle-tools`, for the `elf2bin` tool. `$ cargo install --git
   https://github.com/japaric/particle-tools`
 
@@ -37,21 +35,14 @@ authors = ["Jorge Aparicio <jorge@japaric.io>"]
 name = "my-app"
 version = "0.1.0"
 
-$ # build an example (or write your application in src/main.rs and build that)
-$ xargo build --example function
+$ # edit scripts/run_on_photon to set the name of your photon
+
+$ # run an example (or write your application in src/main.rs and run that)
+$ cargo run --example function
 (..)
-   Compiling my-app v0.1.0 (file:///home/japaric/tmp/my-app)
-    Finished dev [optimized] target(s) in 0.32 secs
-
-$ arm-none-eabi-size target/thumbv7m-none-eabi/debug/examples/function
-   text    data     bss     dec     hex filename
-   4628       8    1476    6112    17e0 target/thumbv7m-none-eabi/debug/examples/function
-
-$ # convert the output into a flash-able binary
-$ elf2bin target/thumbv7m-none-eabi/debug/examples/function
-
-$ # flash the application, the D7 LED on the board should turn on
-$ particle flash $device function.bin
+   Compiling my-app v0.1.0
+    Finished dev [optimized] target(s) in 1.69 secs
+     Running my-app/scripts/run_on_photon target/thumbv7m-none-eabi/debug/examples/function`
 Including:
     function.bin
 attempting to flash firmware to your device Ferris

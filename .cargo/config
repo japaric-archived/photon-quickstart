@@ -43,3 +43,4 @@ rustflags = [
   "-C", "link-arg=-Wl,--defsym,USER_FIRMWARE_IMAGE_SIZE=0x20000",
   "-C", "link-arg=-Wl,--defsym,USER_FIRMWARE_IMAGE_LOCATION=0x80A0000",
 ]
+runner = "scripts/run_on_photon"

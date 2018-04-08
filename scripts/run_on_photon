@@ -1,0 +1,6 @@
+set -e
+# change this default the name of your photon
+: ${PHOTON_PARTICLE_NAME=your-name-here} && export PHOTON_PARTICLE_NAME
+name=$(basename $1)
+elf2bin $1
+particle flash $PHOTON_PARTICLE_NAME $name.bin
